@@ -36,8 +36,8 @@ pub struct ConcealedSignatureCircuit{
 impl ConstraintSynthesizer<Fr> for ConcealedSignatureCircuit{
     fn generate_constraints(self, cs: ConstraintSystemRef<Fr>) -> Result<(),SynthesisError> {
         let commitment_var=FpVar::new_input(cs.clone(),||self.commitment.ok_or(SynthesisError::AssignmentMissing),)?;
-        let pkx_var=FqVar::new_witness(cs.clone(), ||self.pkx.ok_or(SynthesisError::AssignmentMissing),)?;
-        let pky_var=FqVar::new_witness(cs.clone(), ||self.pky.ok_or(SynthesisError::AssignmentMissing),)?;
+        let pkx_var=FqVar::new_input(cs.clone(), ||self.pkx.ok_or(SynthesisError::AssignmentMissing),)?;
+        let pky_var=FqVar::new_input(cs.clone(), ||self.pky.ok_or(SynthesisError::AssignmentMissing),)?;
         let m_var=FpVar::new_witness(cs.clone(),||self.m.ok_or(SynthesisError::AssignmentMissing),)?;
         let t_var=FpVar::new_witness(cs.clone(),||self.t.ok_or(SynthesisError::AssignmentMissing),)?;
         let c_var=FpVar::new_witness(cs.clone(),||self.c.ok_or(SynthesisError::AssignmentMissing),)?;

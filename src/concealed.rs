@@ -1,10 +1,12 @@
-use ark_bn254::{Bn254, Fr, G1Projective as G1};
+use ark_bn254::{Bn254,Fq, Fr, G1Projective as G1};
 use ark_ec::{CurveGroup, PrimeGroup};
 use ark_ff::{PrimeField, BigInteger};
 use ark_groth16::{Groth16,Proof,ProvingKey,VerifyingKey};
 use ark_snark::SNARK;
 use ark_std::{UniformRand, ops::Mul};
 use rand::thread_rng;
+use ark_r1cs_std::fields::emulated_fp::params::{OptimizationType};
+use ark_r1cs_std::fields::emulated_fp::AllocatedEmulatedFpVar;
 use crate::schnorr::{Signature,PublicKey};
 use crate::circuit::ConcealedSignatureCircuit;
 use crate::utils::{get_poseidon_config,poseidon_hash,poseidon_hash2};
@@ -60,7 +62,23 @@ impl ParamCS {
     }
     
     pub fn cs_verify(&self,pk:&PublicKey,cs:&ConcealedSignature)->bool{
-        let public_inputs = vec![cs.C.com];
+        let mut public_inputs = vec![cs.C.com];
+        let pk_affine = pk.pk.into_affine();
+        let x_limbs =AllocatedEmulatedFpVar::<Fq,Fr>
+            ::get_limbs_representations(
+                &pk_affine.x,
+                OptimizationType::Constraints,
+            )
+            .unwrap();
+        let y_limbs =AllocatedEmulatedFpVar::<Fq,Fr>
+            ::get_limbs_representations(
+                &pk_affine.y,
+                OptimizationType::Constraints,
+            )
+            .unwrap();
+        public_inputs.extend(x_limbs);
+        public_inputs.extend(y_limbs);
+        
         let result =Groth16::<Bn254>::verify(&self.vk, &public_inputs, &cs.proof).unwrap();
         result
     }
