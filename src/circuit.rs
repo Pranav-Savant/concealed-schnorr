@@ -58,8 +58,8 @@ impl ConstraintSynthesizer<Fr> for ConcealedSignatureCircuit{
             y: pky_var.clone(),
             inf: Boolean::constant(false),
         };
-        let zg = scalar_mul(&z_bits[..3], &g_point)?;
-        let cpk = scalar_mul(&c_bits[..3], &pk_point)?;
+        let zg = scalar_mul(&z_bits, &g_point)?;
+        let cpk = scalar_mul(&c_bits, &pk_point)?;
         let neg_cpk = ECPointVar {
             x: cpk.x.clone(),
             y: FqVar::constant(Fq::zero())-cpk.y.clone(),

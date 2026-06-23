@@ -124,3 +124,31 @@ criterion_group!(
 );
 
 criterion_main!(benches);
+
+/*
+Schnorr Sign            time:   [115.81 µs 115.83 µs 115.85 µs]
+Found 7 outliers among 100 measurements (7.00%)
+  4 (4.00%) high mild
+  3 (3.00%) high severe
+
+Schnorr Verify          time:   [139.21 µs 139.28 µs 139.38 µs]
+Found 10 outliers among 100 measurements (10.00%)
+  2 (2.00%) high mild
+  8 (8.00%) high severe
+
+Benchmarking Concealed Convert/Convert: Warming up for 3.0000 s
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 9843.4s, or reduce sample count to 10.
+Concealed Convert/Convert
+                        time:   [96.112 s 96.161 s 96.212 s]
+
+Concealed Verify/CVerify
+                        time:   [2.1419 ms 2.1425 ms 2.1431 ms]
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) low mild
+
+Decommit/Decommit       time:   [163.97 µs 164.03 µs 164.11 µs]
+Found 9 outliers among 100 measurements (9.00%)
+  1 (1.00%) low mild
+  3 (3.00%) high mild
+  5 (5.00%) high severe
+*/

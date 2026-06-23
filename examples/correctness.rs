@@ -15,7 +15,7 @@ fn main() {
     let start=Instant::now();
     let (sk, pk) =Schnorr::keyGen(g);
     println!("Key Generation Time:{:?}",start.elapsed());
-    
+
     let sig =Schnorr::Sign(g,m,&sk);
     
     println!("Signature Verify : {}",Schnorr::verify(g,&pk,&sig,m));
@@ -30,3 +30,15 @@ fn main() {
     
     println!("Decommit : {}",cs_decommit(m,&sig,t,&cs.C,&pk));
 }
+/*
+Output :
+Key Generation Time:119.195µs
+Signature Verify : true
+CS Setup Time:98.238439991s
+Concealed Verify : true
+Decommit : true
+*/
+/*
+Constraints:8668756
+Instance variables:2
+*/

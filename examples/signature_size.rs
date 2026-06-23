@@ -23,3 +23,12 @@ fn main() {
     println!("Groth16 Proof Size: {} bytes",serialized_size(&cs.proof));
     println!("Concealed Signature Size: {} bytes",serialized_size(&cs.proof)+ serialized_size(&cs.C.com));
 }
+
+/*
+Output:
+Public Key Size: 32 bytes
+Schnorr Signature Size: 64 bytes
+Commitment Size: 32 bytes
+Groth16 Proof Size: 128 bytes
+Concealed Signature Size: 160 bytes
+*/
